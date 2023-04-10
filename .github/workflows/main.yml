@@ -37,10 +37,8 @@ jobs:
       - name: Run codespell
         run: codespell --ignore-words=config/codespell_ignore.txt **/*
 
-      - name: Set up PYTHONPATH
-        run: echo "::set-env name=PYTHONPATH::${{ github.workspace }}/scripts"
-
       - name: Run tests
         run: pytest test/
+        working-directory: scripts
         env:
-          PYTHONPATH: ${{ env.PYTHONPATH }}
+          PYTHONPATH: ${{ env.PYTHONPATH }}/scripts
