@@ -5,6 +5,7 @@ OUT_DIR = "out/"
 CONFIG_DIR = "config/"
 API_KET_FILE = "api_key.txt"
 
+
 class AppSetting:
     def __init__(self):
         self.api_key = None
@@ -13,7 +14,8 @@ class AppSetting:
         self._initDirs()
         self._init_api_key()
 
-    '''If the API key file is not found, get it through the console'''
+    """If the API key file is not found, get it through the console"""
+
     def _init_api_key(self):
         if not os.path.exists(CONFIG_DIR + API_KET_FILE):
             self.api_key = input("Please enter your OpenAI API key: ")
