@@ -1,5 +1,5 @@
 import os
-from scripts.PythonUtilityClasses.FileWriter import FileWriter
+from PythonUtilityClasses.FileWriter import FileWriter
 
 OUT_DIR = "out/"
 CONFIG_DIR = "config/"

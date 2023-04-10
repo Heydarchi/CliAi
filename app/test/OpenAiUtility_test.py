@@ -1,6 +1,6 @@
 # This is a test file for the OpenAiUtility class
 import unittest
-from scripts.OpenAiUtility import OpenAiUtility
+from OpenAiUtility import OpenAiUtility
 
 
 class MyTestCase(unittest.TestCase):

@@ -39,6 +39,6 @@ jobs:
 
       - name: Run tests
         run: pytest test/
-        working-directory: scripts
+        working-directory: app
         env:
-          PYTHONPATH: ${{ env.PYTHONPATH }}/scripts
+          PYTHONPATH: ${{ env.PYTHONPATH }}/app
