@@ -47,12 +47,16 @@ class App:
         if args.mode == "chat":
             self.run_chat()
         elif args.mode == "one-shot":
-            self.run_one_shot(args.args[0])
+            msg = args.args[0]
+            if len(args.args) > 1:
+                msg = " ".join(args.args[0:])
+                print("Message: " + msg)
+            self.run_one_shot(msg)
         elif args.mode == "file":
             msg = ""
             if len(args.args) > 2:
-                msg = " ".join(args.args[1:])
-            self.run_file(args.args[0], msg)
+                msg = " ".join(args.args[2:])
+            self.run_file(args.args[1], msg)
         else:
             print("Invalid mode")
 
@@ -60,7 +64,7 @@ class App:
         while True:
             user_input = input(Fore.LIGHTBLUE_EX + "You: ")
             print(Style.RESET_ALL, end="")
-            if user_input == "exit":
+            if user_input == "exit" or user_input == "quit":
                 break
             TextUtility.print_color("Please wait for the response...", Fore.YELLOW)
             TextUtility.print_code_colorized(self.open_ai_util.chatPlus(user_input))
