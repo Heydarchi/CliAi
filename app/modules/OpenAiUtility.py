@@ -32,7 +32,9 @@ class OpenAiUtility:
             raise Exception("OpenAI API key is not set")
         self.prompts.append({"role": "user", "content": prompt})
         # print("Prompts: " + str(self.prompts))
-        completion = openai.ChatCompletion.create(model="gpt-4", messages=self.prompts)
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", messages=self.prompts
+        )
 
         # print(completion)
 

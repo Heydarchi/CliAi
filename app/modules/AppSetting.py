@@ -2,8 +2,8 @@ import os
 from PythonUtilityClasses.FileWriter import FileWriter
 from PythonUtilityClasses.FileReader import FileReader
 
-OUT_DIR = "../out/"
-CONFIG_DIR = "../config/"
+OUT_DIR = "./out/"
+CONFIG_DIR = "./config/"
 API_KET_FILE = "api_key.txt"
 
 
