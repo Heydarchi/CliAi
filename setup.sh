@@ -11,6 +11,13 @@ pip install -r requirements.txt
 
 # Create symlink to cli_ai.sh script
 mkdir -p $HOME/.local/bin
+
+# Remove existing symlink if it exists
+if [ -L "$HOME/.local/bin/cli_ai" ]; then
+    rm "$HOME/.local/bin/cli_ai"
+fi
+
+# Create a new symlink
 ln -s $SCRIPT_PATH $HOME/.local/bin/cli_ai
 chmod +x $HOME/.local/bin/cli_ai
 
