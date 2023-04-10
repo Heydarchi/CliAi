@@ -5,6 +5,7 @@ import json
 class OpenAiUtility:
     def __init__(self):
         self.is_api_key_set = False
+        self.prompts = []
 
     def init_open_ai(self, api_key):
         openai.api_key = api_key
@@ -17,7 +18,7 @@ class OpenAiUtility:
             model="text-davinci-003",
             prompt=prompt,
             temperature=0.9,
-            max_tokens=300,
+            max_tokens=2500,
             top_p=1,
             frequency_penalty=0.0,
             presence_penalty=0.6,
@@ -26,11 +27,13 @@ class OpenAiUtility:
         return json.loads(str(response))["choices"][0]["text"]
 
     def chatPlus(self, prompt):
+        # print("ChatPlus: " + prompt)
         if not self.is_api_key_set:
             raise Exception("OpenAI API key is not set")
-        OpenAiUtility.init_open_ai()
-        completion = openai.ChatCompletion.create(
-            model="gpt-4", messages=[{"role": "user", "content": prompt}]
-        )
+        self.prompts.append({"role": "user", "content": prompt})
+        # print("Prompts: " + str(self.prompts))
+        completion = openai.ChatCompletion.create(model="gpt-4", messages=self.prompts)
+
+        # print(completion)
 
         return completion.choices[0].message["content"]
