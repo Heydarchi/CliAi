@@ -1,0 +1,3 @@
+[submodule "scripts/PythonUtilityClasses"]
+	path = scripts/PythonUtilityClasses
+	url = git@github.com:Heydarchi/PythonUtilityClasses.git
