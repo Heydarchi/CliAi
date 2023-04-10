@@ -20,7 +20,7 @@ elif [ "$1" == "file" ]; then
         echo "Please provide a file path."
     else
         # Run CliAi in file mode with the provided file path
-        python "$CLI_AI_DIR/CliAi.py" file "$2"
+        python "$CLI_AI_DIR/CliAi.py" file "$@"
     fi
 elif [ "$1" == "stdin" ]; then
     # Read input from stdin and pass it to CliAi

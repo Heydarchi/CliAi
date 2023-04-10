@@ -54,9 +54,9 @@ class App:
             self.run_one_shot(msg)
         elif args.mode == "file":
             msg = ""
-            if len(args.args) > 1:
-                msg = " ".join(args.args[1:])
-            self.run_file(args.args[0], msg)
+            if len(args.args) > 2:
+                msg = " ".join(args.args[2:])
+            self.run_file(args.args[1], msg)
         else:
             print("Invalid mode")
 
