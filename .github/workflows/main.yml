@@ -41,4 +41,4 @@ jobs:
       run: pytest test/
       working-directory: .
       env:
-        PYTHONPATH: ${{ github.workspace }}/app
+        PYTHONPATH: ${{ github.workspace }}/scripts
