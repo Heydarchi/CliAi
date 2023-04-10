@@ -22,7 +22,7 @@ class TextUtility:
 
     @staticmethod
     def add_color_to_code(text, color):
-        # This function look for thre of \` and color the code between them
+        # This function look for three of \` and color the code between them
         index = 0
         while True:
             index = text.find("```", index)
