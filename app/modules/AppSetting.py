@@ -1,8 +1,9 @@
 import os
 from PythonUtilityClasses.FileWriter import FileWriter
+from PythonUtilityClasses.FileReader import FileReader
 
-OUT_DIR = "out/"
-CONFIG_DIR = "config/"
+OUT_DIR = "../out/"
+CONFIG_DIR = "../config/"
 API_KET_FILE = "api_key.txt"
 
 
@@ -20,6 +21,8 @@ class AppSetting:
         if not os.path.exists(CONFIG_DIR + API_KET_FILE):
             self.api_key = input("Please enter your OpenAI API key: ")
             FileWriter.write_file(CONFIG_DIR + API_KET_FILE, self.api_key)
+        else:
+            self.api_key = FileReader.read_file(CONFIG_DIR + API_KET_FILE)
 
     def _initDirs(self):
         if not os.path.exists(OUT_DIR):
