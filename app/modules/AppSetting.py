@@ -10,9 +10,10 @@ API_KET_FILE = "api_key.txt"
 class AppSetting:
     def __init__(self):
         self.api_key = None
-        self.config_dir = os.environ["CLI_AI_DIR"] + "/config/"
+        self.config_dir = None
 
     def init(self):
+        self.config_dir = os.environ["CLI_AI_DIR"] + "/config/"
         self._initDirs()
         self._init_api_key()
 
