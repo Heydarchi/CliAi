@@ -30,5 +30,5 @@ elif [ "$1" == "stdin" ]; then
     input=$(cat -)
     echo "$input" | python "$CLI_AI_DIR/CliAi.py" one-shot
 else
-    echo "Invalid mode specified. Please use 'chat', 'one-shot', 'file', or 'stdin'."
+    echo "Invalid mode specified. Please use 'chat', 'one-shot', 'file', '--help', '-h', or 'stdin'."
 fi
