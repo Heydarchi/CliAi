@@ -35,7 +35,7 @@ jobs:
         black --check .
 
     - name: Run codespell
-      run: codespell --ignore-words=config/codespell_ignore.txt **/*
+      run: codespell --ignore-words=app/config/codespell_ignore.txt **/*
 
     - name: Run tests
       run: pytest test/
