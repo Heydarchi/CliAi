@@ -1,19 +1,24 @@
 #!/bin/bash
 
+# Check if input is coming from a pipe
+if [ -p /dev/stdin ]; then
+    # Read input from stdin and pass it to CliAi
+    input=$(cat -)
+    # Combine the input from the pipe with the provided arguments
+    messages=("$input" "$@")
+else
+    messages=("$@")
+fi
+
 # Check the mode provided in the command
 if [ -z "$1" ] || [ "$1" == "chat" ]; then
     # Run CliAi in chat mode
     python "$CLI_AI_DIR/CliAi.py" chat
-elif [ "$1" == "one-shot" ]; then
+elif [ "$1" == "oneshot" ]; then
     # Shift the first argument to remove the mode
     shift
-    # Check if any message is provided
-    if [ -z "$1" ]; then
-        echo "Please provide at least one message."
-    else
-        # Run CliAi in one-shot mode with the provided messages
-        python "$CLI_AI_DIR/CliAi.py" one-shot "$@"
-    fi
+    # Run CliAi in oneshot mode with the combined messages
+    python "$CLI_AI_DIR/CliAi.py" oneshot "${messages[@]}"
 elif [ "$1" == "file" ]; then
     # Check if the file path is provided
     if [ -z "$2" ]; then
@@ -25,10 +30,6 @@ elif [ "$1" == "file" ]; then
 elif [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
     # Check if the file path is provided
     python "$CLI_AI_DIR/CliAi.py" -h
-elif [ "$1" == "stdin" ]; then
-    # Read input from stdin and pass it to CliAi
-    input=$(cat -)
-    echo "$input" | python "$CLI_AI_DIR/CliAi.py" one-shot
 else
-    echo "Invalid mode specified. Please use 'chat', 'one-shot', 'file', '--help', '-h', or 'stdin'."
+    echo "Invalid mode specified. Please use 'chat', 'oneshot', 'file', '--help', '-h', or pipe input to 'cli_ai oneshot'."
 fi

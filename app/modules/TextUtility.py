@@ -8,7 +8,7 @@ class TextUtility:
     def print_code_colorized(text):
         "This method will color the code in the text"
         text = TextUtility.add_color_to_code(text, Fore.GREEN)
-        print(text)
+        print(text + Style.RESET_ALL)
 
     @staticmethod
     def print_color(text, color):

@@ -1,29 +1,34 @@
 # CliAi
 A shell assist powered by ChatGPT
 
-**CliAi** is a command-line interface (CLI) application that allows you to interact with the ChatGPT language model easily. It is designed to run in three different modes: chat, one-shot, and file. Additionally, it supports code colorization in the response to enhance readability.
+**CliAi** is a command-line interface (CLI) application that allows you to interact with the ChatGPT language model easily. It is designed to run in three different modes: chat, oneshot, and file. Additionally, it supports code colorization in the response to enhance readability.
 
 
 
 ## Features
-**Chat mode**: Engage in a real-time conversation with ChatGPT.
-**One-shot mode**: Get an instant response by providing an input.
-**File mode**: Process input from a file or the result of another shell command.
-**Code colorization**: Automatically colorizes code in the response for better readability.
-**Setup script**: A setup.sh script to install dependencies and create a cli_ai command in the shell.
+- **Chat mode**: Engage in a real-time conversation with ChatGPT.
+- **One-shot mode**: Get an instant response by providing an input.
+- **File mode**: Process input from a file or the result of another shell command.
+- **Code colorization**: Automatically colorizes code in the response for better readability.
+- **Setup script**: A setup.sh script to install dependencies and create a cli_ai command in the shell.
 
 
 ## Getting Started
 ### Prerequisites
 - Python 3.7 or higher
 - An API key for ChatGPT
+&ensp;
 
 ### Installation
-Clone the repository:
+**Clone the repositories**:
 ```
 git clone https://github.com/Heydarchi/CliAi.git
 cd CliAi
 ```
+&ensp;
+
+**Install dependencies**:
+
 Run the setup script to install dependencies and create the cli_ai command:
 ```
 ./setup.sh
@@ -38,19 +43,30 @@ cli_ai chat
 ```
 You can then interact with ChatGPT by typing your messages and pressing Enter.
 
+![Chat](./screenshots/cli_ai_chat.png)
+
 **Note**: You can exit the chat session by typing **exit** or **quit**.
 
 ### One-Shot Mode
 To get an instant response from ChatGPT, use the following command:
 ```
-cli_ai one-shot "Your question or prompt here"
+cli_ai oneshot "Your question or prompt here"
 ```
+![oneshot](./screenshots/cli_ai_oneshot.png)
+
+![oneshot combine with shell command](./screenshots/cli_ai_oneshot_combine.png)
+
+![oneshot combine with shell command to read a file](./screenshots/cli_ai_oneshot_combine_2.png)
+
 ### File Mode
 To process input from a file or the result of another shell command, use the following command:
 ```
 cli_ai file input.txt "Message 1" "Message 2" "Message 3"
 ```
 Replace input.txt with the path to your input file, and provide additional messages as arguments after the file name.
+
+![file](./screenshots/cli_ai_file.png)
+
 
 Customization
 To customize the behavior of the CLI, you can use the following optional flags:
