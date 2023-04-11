@@ -27,8 +27,8 @@ class App:
             "mode",
             help="Run in the char mode. Put the message or the file name after the one-shoe/file",
             type=str,
-            choices=["chat", "one-shot", "file"],
-            default="one-shot",
+            choices=["chat", "oneshot", "file"],
+            default="oneshot",
         )
         parser.add_argument("args", nargs="*", help="Additional arguments")
         args = parser.parse_args()
@@ -36,21 +36,13 @@ class App:
 
     def run(self):
         args = self.init_help()
-        print(
-            "Running in "
-            + args.mode
-            + " mode"
-            + " with the following arguments: "
-            + str(args.args)
-        )
         # TextUtility.print_user(" ".join(args.args), Fore.CYAN )
         if args.mode == "chat":
             self.run_chat()
-        elif args.mode == "one-shot":
+        elif args.mode == "oneshot":
             msg = args.args[0]
             if len(args.args) > 1:
                 msg = " ".join(args.args[0:])
-                print("Message: " + msg)
             self.run_one_shot(msg)
         elif args.mode == "file":
             msg = ""
@@ -70,10 +62,18 @@ class App:
             TextUtility.print_code_colorized(self.open_ai_util.chatPlus(user_input))
 
     def run_one_shot(self, message):
+        print("Running in oneshot mode" + "\nMessage:" + str(message))
         TextUtility.print_color("Please wait for the response...", Fore.YELLOW)
         TextUtility.print_code_colorized(self.open_ai_util.chatPlus(message))
 
     def run_file(self, file_name, msg):
+        print(
+            "Running in file mode"
+            + "\nFile name: "
+            + str(file_name)
+            + "\nMessage: "
+            + str(msg)
+        )
         TextUtility.print_color("Please wait for the response...", Fore.YELLOW)
         file_content = FileReader.read_file(file_name)
         response = self.open_ai_util.chatPlus(file_content + "\n" + msg)
