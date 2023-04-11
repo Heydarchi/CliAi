@@ -3,7 +3,7 @@ A shell assist powered by ChatGPT
 
 **CliAi** is a command-line interface (CLI) application that allows you to interact with the ChatGPT language model easily. It is designed to run in three different modes: chat, oneshot, and file. Additionally, it supports code colorization in the response to enhance readability.
 
-
+### This is an experimental project. So it may have some bugs. Feel free to submit a pull request if you have any ideas for new features, improvements or report any bugs!
 
 ## Features
 - **Chat mode**: Engage in a real-time conversation with ChatGPT.
