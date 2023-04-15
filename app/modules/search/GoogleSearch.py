@@ -1,6 +1,9 @@
 import requests
 import json
-from api.search.AbstractSearchApi import *
+from modules.search.AbstractSearchApi import *
+from bs4 import BeautifulSoup
+from googlesearch import search
+
 
 class GoogleSearch(AbstractSearchApi):
     def __init__(self, api_key):
@@ -13,36 +16,34 @@ class GoogleSearch(AbstractSearchApi):
 
     def search(self, query, num_results=10):
         if self.api_key is not None:
-            return self.search_by_api(query, num_results)
+            return self.search_by_api(query)
         else:
+            return self.search_scraping(query, num_results)
 
     def search_by_api(self, query):
-        url = "https://www.googleapis.com/customsearch/v1"
-        params = {
-            "key": self.api_key,
-            "cx": self.search_engine_id,
-            "q": query
-        }
-        response = requests.get(url, params=params)
-
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Error occurred while fetching search results: {response.status_code}")
+        result = search(query, num_results=10, advanced=True)
+        lst_result = []
+        for item in result:
+            search_result = SearchResult()
+            search_result.title = item.title
+            search_result.url = item.url
+            search_result.description = item.description
+            lst_result.append(search_result)
+        return lst_result
 
     def search_scraping(self, query, num_results=10):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         }
-        params = {
-            "q": query
-        }
+        params = {"q": query}
         response = requests.get(self.base_url, headers=headers, params=params)
 
         if response.status_code == 200:
             return self.parse_results(response.text)
         else:
-            raise Exception(f"Error occurred while fetching search results: {response.status_code}")
+            raise Exception(
+                f"Error occurred while fetching search results: {response.status_code}"
+            )
 
     def parse_results(self, html):
         soup = BeautifulSoup(html, "html.parser")
@@ -60,15 +61,8 @@ class GoogleSearch(AbstractSearchApi):
 
         return search_results
 
-if __main__ == "__main__":
 
-    # Replace with your API key and search engine ID
-    api_key = NONE
-
-
-    # Perform a search and get the results in JSON format
-    query = "example search query"
-    search_results_json = google_search.search(query)
-
-    # Print the search results as a formatted JSON string
-    print(json.dumps(search_results_json, indent=2))
+if __name__ == "__main__":
+    google_search = GoogleSearch("")
+    results = google_search.search("python")
+    print(results)

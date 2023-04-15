@@ -1,14 +1,26 @@
-import enum
+from dataclasses import dataclass, field
+from enum import Enum
+from dataclass_wizard import JSONWizard
 
 
-class SearchEngine(enum.Enum):
+class SearchEngine(Enum):
     NOT_SET = 0
     GOOGLE = 1
     BING = 2
     YAHOO = 3
 
-class AbstractSearchApi(Resource):
 
+@dataclass
+class SearchResult(JSONWizard):
+    url: str = ""
+    title: str = ""
+    description: str = ""
+
+    def __repr__(self):
+        return f"SearchResult(url={self.url}, title={self.title}, description={self.description})"
+
+
+class AbstractSearchApi:
     def __init__(self, api_key):
         self.api_key = api_key
         self.search_engine_id = SearchEngine.NOT_SET

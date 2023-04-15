@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from api.search.AbstractSearchApi import *
+from modules.search.AbstractSearchApi import *
+
 
 class BingSearch(AbstractSearchApi):
     def __init__(self, api_key):
@@ -15,36 +16,42 @@ class BingSearch(AbstractSearchApi):
         self.base_url = "https://www.bing.com/search"
 
     def search(self, query, num_results=10):
-        params = {
-            "q": query,
-            "count": num_results
-        }
+        params = {"q": query, "count": num_results}
         response = requests.get(self.base_url, headers=self.headers, params=params)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, "html.parser")
             return self.extract_results(soup)
         else:
-            raise Exception(f"Error occurred while fetching search results: {response.status_code}")
+            raise Exception(
+                f"Error occurred while fetching search results: {response.status_code}"
+            )
 
     def extract_results(self, soup):
-        results = []
+        lst_result = []
         for result in soup.find_all("li", class_="b_algo"):
             title_element = result.find("h2")
             link_element = title_element.find("a", href=True) if title_element else None
             snippet_element = result.find("div", class_="b_caption")
 
             if link_element and snippet_element:
-                results.append({
+                search_result = SearchResult()
+                search_result.title = title_element.text
+                search_result.url = link_element["href"]
+                search_result.description = snippet_element.get_text(
+                    separator=" "
+                ).strip()
+                lst_result.append(search_result)
+                """results.append({
                     "title": title_element.text,
                     "link": link_element["href"],
                     "snippet": snippet_element.get_text(separator=" ").strip()
-                })
-        return results
+                })"""
+        return lst_result
 
 
 if __name__ == "__main__":
     # Create a BingSearch instance
-    bing_search = BingSearch()
+    bing_search = BingSearch(None)
 
     # Search for a query and get the results
     query = "python programming"
@@ -52,4 +59,5 @@ if __name__ == "__main__":
 
     # Print the search results
     import json
-    print(json.dumps(results, indent=2, ensure_ascii=False))
+
+    print(results)
