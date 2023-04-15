@@ -31,9 +31,13 @@ class AppSetting:
     def _init_googleapi_key(self):
         if not os.path.exists(self.config_dir + GOOGLE_API_KEY_FILE):
             self.googleapi_key = input("Please enter your Google API key: ")
-            FileWriter.write_file(self.config_dir + GOOGLE_API_KEY_FILE, self.googleapi_key)
+            FileWriter.write_file(
+                self.config_dir + GOOGLE_API_KEY_FILE, self.googleapi_key
+            )
         else:
-            self.googleapi_key = FileReader.read_file(self.config_dir + GOOGLE_API_KEY_FILE)
+            self.googleapi_key = FileReader.read_file(
+                self.config_dir + GOOGLE_API_KEY_FILE
+            )
 
     def _initDirs(self):
         if not os.path.exists(OUT_DIR):

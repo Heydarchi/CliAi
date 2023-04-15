@@ -1,5 +1,6 @@
 import requests
 
+
 class WebContent:
     def __init__(self):
         self.headers = {
@@ -11,8 +12,9 @@ class WebContent:
         if response.status_code == 200:
             return response.text
         else:
-            raise Exception(f"Error occurred while fetching content: {response.status_code}")
-
+            raise Exception(
+                f"Error occurred while fetching content: {response.status_code}"
+            )
 
 
 if __name__ == "__main__":
