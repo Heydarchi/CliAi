@@ -1,7 +1,7 @@
 # This is a test file for the AppSetting class
 import unittest
 import pytest
-from utility.AppSetting import AppSetting
+from modules.utility.AppSetting import AppSetting
 
 
 class MyTestCase(unittest.TestCase):

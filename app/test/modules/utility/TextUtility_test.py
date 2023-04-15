@@ -1,5 +1,5 @@
 import unittest
-from utility.TextUtility import TextUtility
+from modules.utility.TextUtility import TextUtility
 from colorama import Fore, Back, Style
 
 
