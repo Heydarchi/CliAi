@@ -1,10 +1,9 @@
-from modules.OpenAiUtility import OpenAiUtility
-from modules.AppSetting import AppSetting
+from app.modules.ai.OpenAiUtility import OpenAiUtility
+from app.modules.utility.AppSetting import AppSetting
 from PythonUtilityClasses.FileReader import FileReader
-from modules.TextUtility import TextUtility
+from app.modules.utility.TextUtility import TextUtility
 import argparse
-from PythonUtilityClasses.FileWriter import FileWriter
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 # This file contains the main logic for the app
 
