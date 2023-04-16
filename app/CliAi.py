@@ -51,7 +51,7 @@ class App:
         else:
             print("Invalid mode")
 
-    def run_chat(self):
+    def run_chat(self, web_access=False):
         while True:
             user_input = input(Fore.LIGHTBLUE_EX + "You: ")
             print(Style.RESET_ALL, end="")
