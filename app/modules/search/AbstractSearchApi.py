@@ -1,13 +1,15 @@
 from dataclasses import dataclass, field
 from enum import Enum
 from dataclass_wizard import JSONWizard
+from dataclasses import asdict
 
 
 class SearchEngine(Enum):
-    NOT_SET = 0
-    GOOGLE = 1
-    BING = 2
-    YAHOO = 3
+    MOCK = -1, "MOCK"
+    NOT_SET = 0, "NOT_SET"
+    GOOGLE = 1, "GOOGLE"
+    BING = 2, "BING"
+    YAHOO = 3, "YAHOO"
 
 
 @dataclass
@@ -17,7 +19,10 @@ class SearchResult(JSONWizard):
     description: str = ""
 
     def __repr__(self):
-        return f"SearchResult(url={self.url}, title={self.title}, description={self.description})"
+        return f"url={self.url}, title={self.title}, description={self.description}"
+
+    def to_dict(self):
+        return asdict(self)
 
 
 class AbstractSearchApi:
@@ -27,6 +32,9 @@ class AbstractSearchApi:
 
     def get_search_engine_id(self):
         return self.search_engine_id
+
+    def get_search_engine_name(self):
+        return self.search_engine_id.name
 
     def seacrh(self):
         pass
