@@ -130,3 +130,5 @@ dmypy.json
 .idea
 config/api_key.txt
 app/config/api_key.txt
+app/config/openapi_key.txt
+config/openapi_key.txt
