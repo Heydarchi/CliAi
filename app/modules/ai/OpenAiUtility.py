@@ -18,7 +18,7 @@ class OpenAiUtility:
             model="text-davinci-003",
             prompt=prompt,
             temperature=0.9,
-            max_tokens=2500,
+            max_tokens=2000,
             top_p=1,
             frequency_penalty=0.0,
             presence_penalty=0.6,
