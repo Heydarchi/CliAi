@@ -1,7 +1,7 @@
 # This class tests the SearchManager class by using the MockSearchApi class.
 import unittest
 from modules.logic.SearchManager import SearchManager
-from test.modules.logic.MockSearchApi import MockSearchApi
+from modules.search.MockSearchApi import MockSearchApi
 
 
 class SearchManager_test(unittest.TestCase):

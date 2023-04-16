@@ -26,7 +26,7 @@ class ChatGptResponseParser:
         extracted_data = {}
 
         for tag in EXTRACT_TAGS:
-            extracted_data[tag.lower()] = self.extract(content, tag.name)
+            extracted_data[tag.name.lower()] = self.extract(content, tag.name)
 
         return extracted_data
 

@@ -1,7 +1,5 @@
 # This class implements a mock search api. It is used for testing purposes.
-from modules.search.AbstractSearchApi import AbstractSearchApi
-from modules.search.SearchResult import SearchResult
-from modules.search.SearchEngine import SearchEngine
+from modules.search.AbstractSearchApi import *
 
 
 class MockSearchApi(AbstractSearchApi):
