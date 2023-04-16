@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from googlesearch import search
 
 
-class GoogleSearch(AbstractSearchApi):
+class GoogleSearchApi(AbstractSearchApi):
     def __init__(self, api_key):
         self.api_key = api_key
         self.search_engine_id = SearchEngine.GOOGLE
@@ -15,10 +15,10 @@ class GoogleSearch(AbstractSearchApi):
         self.base_url = "https://www.google.com/search"
 
     def search(self, query, num_results=10):
-        if self.api_key is not None:
-            return self.search_by_api(query)
+        return self.search_by_api(query)
+        """if self.api_key is not None:
         else:
-            return self.search_scraping(query, num_results)
+            return self.search_scraping(query, num_results)"""
 
     def search_by_api(self, query):
         result = search(query, num_results=10, advanced=True)
@@ -63,6 +63,6 @@ class GoogleSearch(AbstractSearchApi):
 
 
 if __name__ == "__main__":
-    google_search = GoogleSearch("")
+    google_search = GoogleSearchApi("")
     results = google_search.search("python")
     print(results)

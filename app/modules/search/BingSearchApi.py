@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 from modules.search.AbstractSearchApi import *
 
 
-class BingSearch(AbstractSearchApi):
+class BingSearchApi(AbstractSearchApi):
     def __init__(self, api_key):
         self.api_key = api_key
-        self.search_engine_id = SearchEngine.GOOGLE
+        self.search_engine_id = SearchEngine.BING
         self._init_variables()
 
     def _init_variables(self):
@@ -50,8 +50,8 @@ class BingSearch(AbstractSearchApi):
 
 
 if __name__ == "__main__":
-    # Create a BingSearch instance
-    bing_search = BingSearch(None)
+    # Create a BingSearchApi instance
+    bing_search = BingSearchApi(None)
 
     # Search for a query and get the results
     query = "python programming"
