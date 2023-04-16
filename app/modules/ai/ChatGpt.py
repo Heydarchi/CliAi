@@ -18,6 +18,7 @@ class ChatGpt:
         self._CONTENT = '!!CONTENT!!=["the_provided_content"]'
         self._LINKS = '!!LINKS!!=["Link_1", "Link2", "Link3"]'
         self._KEYWORDS = '!!KEYWORDS!!=["the_provided_keywords"]'
+        self._DESCRIPTION = '!!DESCRIPTION!!=["the_provided_description"]'
         self._ASK_FOR_SHELL_SCRIPT = (
             "Please provide the shell script you want to run like " + self._SHELL_SCRIPT
         )
@@ -31,6 +32,10 @@ class ChatGpt:
             " separated by a comma like " + self._KEYWORDS
         )
         self._ASK_FOR_CONTENT = (
+            " Please provide the out put in format below:" + self._CONTENT
+        )
+
+        self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH = (
             " If the content provided is enough provide the output"
             " content/code/file/etc for user provide like below: "
             + self._SHELL_SCRIPT
@@ -41,12 +46,24 @@ class ChatGpt:
             + self._KEYWORDS
         )
 
+        self._ASK_FOR_OUTPUT = (
+            " Please provide the output in format below if any of them "
+            "is available other wise ignore the irrelevant tags:"
+            + self._DESCRIPTION
+            + self._SHELL_SCRIPT
+            + self._CODE
+            + self._CONTENT
+        )
+
     def init(self):
         self._app_setting.init()
         self._open_ai_util.init_open_ai(self._app_setting.get_api_key())
 
     def chat(self, msg):
         return self._open_ai_util.chatPlus(msg)
+
+    def chatPlus(self, msg):
+        return self._open_ai_util.chatPlus(msg + self._ASK_FOR_OUTPUT)
 
     def ask_for_keywords(self, prompt):
         print("Asking for keywords: ", prompt + self._ASK_FOR_KEYWORDS)
@@ -65,7 +82,9 @@ class ChatGpt:
 
     def ask_for_content(self, prompt):
         print("Asking for content: ", prompt)
-        return self._open_ai_util.chatPlus(dumps(prompt) + self._ASK_FOR_CONTENT)
+        return self._open_ai_util.chatPlus(
+            dumps(prompt) + self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH
+        )
 
     def ask_for_shell_script(self, prompt):
         print("Asking for shell script: ", prompt)

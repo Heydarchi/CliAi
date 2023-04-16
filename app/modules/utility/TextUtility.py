@@ -11,6 +11,46 @@ class TextUtility:
         print(text + Style.RESET_ALL)
 
     @staticmethod
+    def print_plus(input):
+        "This method will color the code in the text"
+        if "DESCRIPTION" in input:
+            print("\n".join(input["DESCRIPTION"]) + Style.RESET_ALL)
+        if "CONTENT" in input:
+            print("\n".join(input["CONTENT"]) + Style.RESET_ALL)
+        if "SHELL_SCRIPT" in input:
+            if "".join(input["SHELL_SCRIPT"]).strip() != "":
+                print(
+                    "\nScript:\n"
+                    + Fore.LIGHTBLUE_EX
+                    + "\n".join(input["SHELL_SCRIPT"])
+                    + Style.RESET_ALL
+                )
+        if "LINKS" in input:
+            if "".join(input["LINKS"]).strip() != "":
+                print(
+                    "\nLinks:\n"
+                    + Fore.CYAN
+                    + "\n".join(input["LINKS"])
+                    + Style.RESET_ALL
+                )
+        if "KEYWORDS" in input:
+            if "".join(input["KEYWORDS"]).strip() != "":
+                print(
+                    "\nKeywords:\n"
+                    + Fore.RED
+                    + "\n".join(input["KEYWORDS"])
+                    + Style.RESET_ALL
+                )
+        if "CODE" in input:
+            if "".join(input["CODE"]).strip() != "":
+                print(
+                    "\nCode:\n"
+                    + Fore.GREEN
+                    + "\n".join(input["CODE"])
+                    + Style.RESET_ALL
+                )
+
+    @staticmethod
     def print_color(text, color):
         "This method will print the text in the color"
         print(color + text + Style.RESET_ALL)

@@ -42,22 +42,30 @@ class ChatGptResponseParser_test(unittest.TestCase):
         shell_script = chat_gpt_response_parser.extract(response, "SHELL_SCRIPT")
         self.assertEqual(shell_script, ["Content_1", "Content2", "Content3"])
 
+    def test_extract_description(self):
+        chat_gpt_response_parser = ChatGptResponseParser()
+        response = '!!DESCRIPTION!!=["the_provided_description"]'
+        description = chat_gpt_response_parser.extract(response, "DESCRIPTION")
+        self.assertEqual(description, ["the_provided_description"])
+
     def test_extract_all(self):
         chat_gpt_response_parser = ChatGptResponseParser()
         response = """
         !!SHELL_SCRIPT!!=["Content_1", "Content2", "Content3"]
         !!CODE!!=["the_provided_code"]
         !!FILE!!=["the_provided_file"]
-        !!CONTENT!!=["the_provided_content"]
+        !!DESCRIPTION!!=["the_provided_description"]
+        !!CONTENT!!=["the_provided_content",]
         !!LINKS!!=["Link_1", "Link2", "Link3"]
         !!KEYWORDS!!=["the_provided_keywords"]
         """
         extracted_data = chat_gpt_response_parser.extract_all(response)
         self.assertEqual(
-            extracted_data["shell_script"], ["Content_1", "Content2", "Content3"]
+            extracted_data["SHELL_SCRIPT"], ["Content_1", "Content2", "Content3"]
         )
-        self.assertEqual(extracted_data["code"], ["the_provided_code"])
-        self.assertEqual(extracted_data["file"], ["the_provided_file"])
-        self.assertEqual(extracted_data["content"], ["the_provided_content"])
-        self.assertEqual(extracted_data["links"], ["Link_1", "Link2", "Link3"])
-        self.assertEqual(extracted_data["keywords"], ["the_provided_keywords"])
+        self.assertEqual(extracted_data["CODE"], ["the_provided_code"])
+        self.assertEqual(extracted_data["FILE"], ["the_provided_file"])
+        self.assertEqual(extracted_data["CONTENT"], ["the_provided_content"])
+        self.assertEqual(extracted_data["LINKS"], ["Link_1", "Link2", "Link3"])
+        self.assertEqual(extracted_data["KEYWORDS"], ["the_provided_keywords"])
+        self.assertEqual(extracted_data["DESCRIPTION"], ["the_provided_description"])

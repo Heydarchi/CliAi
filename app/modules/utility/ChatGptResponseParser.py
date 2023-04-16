@@ -11,28 +11,24 @@ class EXTRACT_TAGS(Enum):
     CONTENT = "CONTENT"
     LINKS = "LINKS"
     KEYWORDS = "KEYWORDS"
+    DESCRIPTION = "DESCRIPTION"
 
 
 class ChatGptResponseParser:
     def extract_all(self, content):
-        tags = [
-            "SHELL_SCRIPT",
-            "CODE",
-            "FILE",
-            "CONTENT",
-            "LINKS",
-            "KEYWORDS",
-        ]
         extracted_data = {}
 
         for tag in EXTRACT_TAGS:
-            extracted_data[tag.name.lower()] = self.extract(content, tag.name)
+            extracted_data[tag.name] = self.extract(
+                content.replace(",]", "]").replace("'", " "), tag.name
+            )
 
         return extracted_data
 
     def extract(self, content, tag):
         pattern = rf"!!{tag}!!=(\[[^\]]+\])"
         match = re.search(pattern, content)
+        # print("tag", tag)
         if match:
             extracted_data = match.group(1)
             extracted_data = extracted_data.replace(
@@ -49,6 +45,7 @@ if __name__ == "__main__":
     !!CODE!!=["the_provided_code"]
     !!FILE!!=["the_provided_file"]
     !!CONTENT!!=["the_provided_content"]
+    !!DESCRIPTION!!=["the_provided_description"]
     !!LINKS!!=["Link_1", "Link2", "Link3"]
     !!KEYWORDS!!=["the_provided_keywords"]
     """
