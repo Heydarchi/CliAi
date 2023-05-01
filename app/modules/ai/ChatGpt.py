@@ -20,24 +20,30 @@ class ChatGpt:
         self._KEYWORDS = '!!KEYWORDS!!=["the_provided_keywords"]'
         self._DESCRIPTION = '!!DESCRIPTION!!=["the_provided_description"]'
         self._ASK_FOR_SHELL_SCRIPT = (
-            "Please provide the shell script you want to run like " + self._SHELL_SCRIPT
+            "Please provide the shell script you want to run like\n "
+            + self._SHELL_SCRIPT
         )
 
         self._ASK_FOR_LINKS = (
-            " Please only respond with 2 links you want to scrap int the format below "
+            " Please only respond with 2 links you want to scrap int the format below \n"
             + self._LINKS
         )
         self._ASK_FOR_KEYWORDS = (
             " Please suggest some keywords to search for the user input above"
-            " separated by a comma like " + self._KEYWORDS
+            " separated by a comma like \n" + self._KEYWORDS
         )
         self._ASK_FOR_CONTENT = (
-            " Please provide the out put in format below:" + self._CONTENT
+            " Please provide the out put in format below:\n" + self._CONTENT
+        )
+
+        self._ASK_TO_SUMMARIZE = (
+            " Please summarize and extract the key information in the format below:\n"
+            + self._CONTENT
         )
 
         self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH = (
             " If the content provided is enough provide the output"
-            " content/code/file/etc for user provide like below: "
+            " content/code/file/etc for user provide like below: \n"
             + self._SHELL_SCRIPT
             + self._CODE
             + self._FILE
@@ -48,7 +54,7 @@ class ChatGpt:
 
         self._ASK_FOR_OUTPUT = (
             " Please provide the output in format below if any of them "
-            "is available other wise ignore the irrelevant tags:"
+            "is available other wise ignore the irrelevant tags:\n"
             + self._DESCRIPTION
             + self._SHELL_SCRIPT
             + self._CODE
@@ -89,3 +95,9 @@ class ChatGpt:
     def ask_for_shell_script(self, prompt):
         print("Asking for shell script: ", prompt)
         return self._open_ai_util.chatPlus(prompt + self._ASK_FOR_SHELL_SCRIPT)
+
+    def ask_to_summarize(self, prompt):
+        print("Asking to summarize: ", prompt)
+        return self._open_ai_util.chatPlusSingle(
+            "\n\n ".join(prompt) + self._ASK_FOR_CONTENT
+        )

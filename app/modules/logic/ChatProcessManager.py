@@ -25,16 +25,24 @@ class ChatSearchManager:
 
     def search_callback(self, results):
         try:
-            print("\n\nCallback is invkoed! Search results:", results)
+            # print("\n\nCallback is invkoed! Search results:", results)
             converted_results = self.convert_search_results_to_json(results)
-            print("\n\nConverted results: " + converted_results)
+            # print("\n\nConverted results: " + converted_results)
             selected_links = self.chat_gpt.select_links_to_scrap(converted_results)
             the_links = self.chat_response_parser.extract(
                 selected_links, EXTRACT_TAGS.LINKS.name
             )
-            print("\n\nSelected links:", the_links)
+            # print("\n\nSelected links:", the_links)
             scrapped_contents = self.scraper.scrap_links(the_links)
-            formatted_output = self.chat_gpt.process_scrapped_data(scrapped_contents)
+
+            summarized_contents = []
+            # print("\n\nScrapped contents[0]:", type(scrapped_contents[0]), scrapped_contents[0]['content'])
+            for content in scrapped_contents:
+                summarized_contents.append(
+                    self.chat_gpt.ask_to_summarize(content["content"])
+                )
+            print("\n\nSummarized contents:", summarized_contents)
+            formatted_output = self.chat_gpt.process_scrapped_data(summarized_contents)
 
             print("Final response:")
             print(formatted_output)
