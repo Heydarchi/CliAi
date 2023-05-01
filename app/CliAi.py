@@ -1,10 +1,11 @@
-from modules.OpenAiUtility import OpenAiUtility
-from modules.AppSetting import AppSetting
+from modules.ai.OpenAiUtility import OpenAiUtility
+from modules.utility.AppSetting import AppSetting
 from PythonUtilityClasses.FileReader import FileReader
-from modules.TextUtility import TextUtility
+from modules.utility.TextUtility import TextUtility
+from modules.ai.ChatGpt import ChatGpt
+from modules.utility.ChatGptResponseParser import ChatGptResponseParser
 import argparse
-from PythonUtilityClasses.FileWriter import FileWriter
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 # This file contains the main logic for the app
 
@@ -13,6 +14,8 @@ class App:
     def __init__(self):
         self.app_setting = AppSetting()
         self.open_ai_util = OpenAiUtility()
+        self.chat_gpt = ChatGpt()
+        self.chat_response_parser = ChatGptResponseParser()
         self.init_app()
 
     def init_app(self):
@@ -27,7 +30,7 @@ class App:
             "mode",
             help="Run in the char mode. Put the message or the file name after the one-shoe/file",
             type=str,
-            choices=["chat", "oneshot", "file"],
+            choices=["chat", "chatplus", "oneshot", "file"],
             default="oneshot",
         )
         parser.add_argument("args", nargs="*", help="Additional arguments")
@@ -39,6 +42,8 @@ class App:
         # TextUtility.print_user(" ".join(args.args), Fore.CYAN )
         if args.mode == "chat":
             self.run_chat()
+        elif args.mode == "chatplus":
+            self.run_chat_plus()
         elif args.mode == "oneshot":
             msg = args.args[0]
             if len(args.args) > 1:
@@ -60,6 +65,19 @@ class App:
                 break
             TextUtility.print_color("Please wait for the response...", Fore.YELLOW)
             TextUtility.print_code_colorized(self.open_ai_util.chatPlus(user_input))
+
+    def run_chat_plus(self, web_access=False):
+        while True:
+            user_input = input(Fore.LIGHTBLUE_EX + "You: ")
+            print(Style.RESET_ALL, end="")
+            if user_input == "exit" or user_input == "quit":
+                break
+            TextUtility.print_color("Please wait for the response...", Fore.YELLOW)
+            response = self.chat_gpt.chatPlus(user_input)
+            print("Response: " + str(response))
+            extracted_response = self.chat_response_parser.extract_all(response)
+            # print("Extracted response: " + str(extracted_response))
+            TextUtility.print_plus(extracted_response)
 
     def run_one_shot(self, message):
         print("Running in oneshot mode" + "\nMessage:" + str(message))

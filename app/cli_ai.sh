@@ -11,9 +11,9 @@ else
 fi
 
 # Check the mode provided in the command
-if [ -z "$1" ] || [ "$1" == "chat" ]; then
+if [ -z "$1" ] || [ "$1" == "chat" ] || [ "$1" == "chatplus" ] ; then
     # Run CliAi in chat mode
-    python "$CLI_AI_DIR/CliAi.py" chat
+    python "$CLI_AI_DIR/CliAi.py" "$1"
 elif [ "$1" == "oneshot" ]; then
     # Shift the first argument to remove the mode
     shift
@@ -31,5 +31,5 @@ elif [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
     # Check if the file path is provided
     python "$CLI_AI_DIR/CliAi.py" -h
 else
-    echo "Invalid mode specified. Please use 'chat', 'oneshot', 'file', '--help', '-h', or pipe input to 'cli_ai oneshot'."
+    echo "Invalid mode specified. Please use 'chat', 'chatplus', 'oneshot', 'file', '--help', '-h', or pipe input to 'cli_ai oneshot'."
 fi

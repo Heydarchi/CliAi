@@ -18,7 +18,7 @@ class OpenAiUtility:
             model="text-davinci-003",
             prompt=prompt,
             temperature=0.9,
-            max_tokens=2500,
+            max_tokens=2000,
             top_p=1,
             frequency_penalty=0.0,
             presence_penalty=0.6,
@@ -28,6 +28,9 @@ class OpenAiUtility:
 
     def chatPlus(self, prompt):
         # print("ChatPlus: " + prompt)
+        while len(self.prompts) > 2:
+            self.prompts.pop(0)
+
         if not self.is_api_key_set:
             raise Exception("OpenAI API key is not set")
         self.prompts.append({"role": "user", "content": prompt})
@@ -38,4 +41,12 @@ class OpenAiUtility:
 
         # print(completion)
 
+        return completion.choices[0].message["content"]
+
+    def chatPlusSingle(self, prompt):
+        # print("Prompts: " + str(self.prompts))
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
+        )
+        # print(completion)
         return completion.choices[0].message["content"]

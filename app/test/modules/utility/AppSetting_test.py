@@ -1,13 +1,13 @@
 # This is a test file for the AppSetting class
 import unittest
 import pytest
-from modules.AppSetting import AppSetting
+from modules.utility.AppSetting import AppSetting
 
 
 class MyTestCase(unittest.TestCase):
     def test_init(self):
         app_setting = AppSetting()
-        self.assertEqual(app_setting.api_key, None)
+        self.assertEqual(app_setting.openapi_key, None)
 
     def test_get_api_key_raises_exception(self):
         app_setting = AppSetting()
