@@ -33,12 +33,11 @@ class ChatGpt:
             " separated by a comma like \n" + self._KEYWORDS
         )
         self._ASK_FOR_CONTENT = (
-            " Please provide the out put in format below:\n" + self._CONTENT
+            " Please provide the output in format below:\n" + self._CONTENT
         )
 
         self._ASK_TO_SUMMARIZE = (
-            " Please summarize and extract the key information in the format below:\n"
-            + self._CONTENT
+            " Please summarize and extract the key information for:\n"
         )
 
         self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH = (
@@ -73,23 +72,25 @@ class ChatGpt:
 
     def ask_for_keywords(self, prompt):
         print("Asking for keywords: ", prompt + self._ASK_FOR_KEYWORDS)
-        return self._open_ai_util.chatPlus(prompt + self._ASK_FOR_KEYWORDS)
+        return self._open_ai_util.chatPlus(self._ASK_FOR_KEYWORDS + prompt)
 
     def select_links_to_scrap(self, results):
         print("Asking for links to scrap: ", results)
-        return self._open_ai_util.chatPlus(dumps(results) + self._ASK_FOR_LINKS)
+        return self._open_ai_util.chatPlus(self._ASK_FOR_LINKS + dumps(results))
 
     def process_scrapped_data(self, scrapped_contents):
         print(
             "Asking for processing scrapped data: ",
             scrapped_contents,
         )
-        return self._open_ai_util.chatPlus(dumps(scrapped_contents))
+        return self._open_ai_util.chatPlus(
+            self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH + dumps(scrapped_contents)
+        )
 
     def ask_for_content(self, prompt):
         print("Asking for content: ", prompt)
         return self._open_ai_util.chatPlus(
-            dumps(prompt) + self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH
+            self._ASK_FOR_OUTPUT_OR_CONTINUE_SEARCH + dumps(prompt)
         )
 
     def ask_for_shell_script(self, prompt):
@@ -97,7 +98,5 @@ class ChatGpt:
         return self._open_ai_util.chatPlus(prompt + self._ASK_FOR_SHELL_SCRIPT)
 
     def ask_to_summarize(self, prompt):
-        print("Asking to summarize: ", prompt)
-        return self._open_ai_util.chatPlusSingle(
-            "\n\n ".join(prompt) + self._ASK_FOR_CONTENT
-        )
+        # print("Asking to summarize: ", prompt)
+        return self._open_ai_util.chatPlusSingle(self._ASK_TO_SUMMARIZE + prompt)

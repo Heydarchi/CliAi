@@ -46,7 +46,7 @@ class OpenAiUtility:
     def chatPlusSingle(self, prompt):
         # print("Prompts: " + str(self.prompts))
         completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", messages=prompt
+            model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
         )
         # print(completion)
         return completion.choices[0].message["content"]

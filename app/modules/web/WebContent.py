@@ -8,13 +8,15 @@ class WebContent:
         }
 
     def fetch_content(self, url):
-        response = requests.get(url, headers=self.headers)
-        if response.status_code == 200:
-            return response.text
-        else:
-            raise Exception(
-                f"Error occurred while fetching content: {response.status_code}"
-            )
+        try:
+            response = requests.get(url, headers=self.headers)
+            if response.status_code == 200:
+                return response.text
+            else:
+                print(f"Error occurred while fetching content: {response.status_code}")
+        except Exception as e:
+            print(f"An error occurred while fetching content: {e}")
+            return "None"
 
 
 if __name__ == "__main__":

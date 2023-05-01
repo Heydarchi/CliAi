@@ -37,11 +37,19 @@ class ChatSearchManager:
 
             summarized_contents = []
             # print("\n\nScrapped contents[0]:", type(scrapped_contents[0]), scrapped_contents[0]['content'])
+            print("\n\n*****type of scrapped_contents:", type(scrapped_contents))
             for content in scrapped_contents:
-                summarized_contents.append(
-                    self.chat_gpt.ask_to_summarize(content["content"])
-                )
-            print("\n\nSummarized contents:", summarized_contents)
+                print("\n\n*****type of content[content]:", type(content["content"]))
+                prompt = []
+                if len(content["content"]) > 16000:
+                    prompt.append(content["content"][:16000])
+                    prompt.append(content["content"][16000:])
+                result = ""
+                for p in prompt:
+                    result = result + " " + self.chat_gpt.ask_to_summarize(p)
+                summarized_contents.append(result)
+            # print("\n\nSummarized contents:", summarized_contents)
+            print("\n\n*******type of summarized_contents:", type(summarized_contents))
             formatted_output = self.chat_gpt.process_scrapped_data(summarized_contents)
 
             print("Final response:")
